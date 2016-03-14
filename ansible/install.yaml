@@ -9,9 +9,9 @@
   tasks:
     - user: name={{deploy_user}} shell=/bin/bash home=/home/{{deploy_user}}
 
-    - apt: name=postfix
-
     - apt: update_cache=yes
+    - apt: name=postfix
+    - apt: name=git
     - apt: name=curl
     - apt: name=sudo
     - apt: name=build-essential # to compile erlang

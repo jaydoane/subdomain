@@ -1,0 +1,5 @@
+# digitalocean hosts
+[all]
+45.55.5.198 ansible_ssh_user=root
+104.236.132.46 ansible_ssh_user=root
+[none]

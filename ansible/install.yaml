@@ -1,0 +1,42 @@
+---
+# usage:
+# (ansible)jay@mbp:~/proj/subd-auth ansible-playbook install.yaml -i do.hosts
+
+# automate subdomain (re)install
+
+- hosts: all
+  gather_facts: false
+  tasks:
+    - user: name={{deploy_user}} shell=/bin/bash home=/home/{{deploy_user}}
+
+    - apt: name=postfix
+
+    - apt: update_cache=yes
+    - apt: name=curl
+    - apt: name=sudo
+    - apt: name=build-essential # to compile erlang
+    - apt: name=libncurses5-dev # to compile erlang
+    - apt: name=libssl-dev # to compile erlang crypto
+    
+    - command: curl -O 'https://raw.githubusercontent.com/yrashk/kerl/master/kerl'
+      args:
+        creates: /usr/local/bin/kerl
+        chdir: /usr/local/bin
+    - file: path=/usr/local/bin/kerl mode='a+x'
+
+- hosts: all
+  gather_facts: false
+  become: true
+  become_user: '{{deploy_user}}'
+  vars:
+    otp_vsn: 18.2.1
+    home_dir: /home/{{deploy_user}}
+  tasks:
+    - copy: src=files/.kerlrc dest={{home_dir}}/
+    - command: kerl update releases
+    - command: kerl build {{otp_vsn}} {{otp_vsn}}
+      args:
+        creates: '{{home_dir}}/.kerl/builds/{{otp_vsn}}/release_{{otp_vsn}}'
+    - command: kerl install {{otp_vsn}} {{home_dir}}/.kerl/installs/{{otp_vsn}}/
+      args:
+        creates: '{{home_dir}}/.kerl/installs/{{otp_vsn}}'

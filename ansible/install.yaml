@@ -22,6 +22,10 @@
                creates=/usr/local/bin/kerl chdir=/usr/local/bin
     - file: path=/usr/local/bin/kerl mode='a+x'
 
+    - command: curl -O https://s3.amazonaws.com/rebar3/rebar3
+               creates=/usr/local/bin/rebar3 chdir=/usr/local/bin
+    - file: path=/usr/local/bin/rebar3 mode='a+x'
+      
 - hosts: all
   gather_facts: false
   become: true

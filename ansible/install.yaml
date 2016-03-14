@@ -41,3 +41,6 @@
                creates={{home_dir}}/.kerl/builds/{{otp_vsn}}/release_{{otp_vsn}}
     - command: kerl install {{otp_vsn}} {{otp_install_dir}}/
                creates={{otp_install_dir}}
+    - git: repo=https://github.com/jaydoane/subdomain
+           dest={{home_dir}}/subdomain
+    - shell: . {{otp_install_dir}}/activate && cd {{home_dir}}/subdomain && rebar3 compile

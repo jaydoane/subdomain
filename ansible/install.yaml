@@ -31,7 +31,7 @@
   become: true
   become_user: '{{deploy_user}}'
   vars:
-    otp_vsn: 18.2.1
+    otp_vsn: 18.3
     home_dir: /home/{{deploy_user}}
     otp_install_dir: '{{home_dir}}/.kerl/installs/{{otp_vsn}}'
   tasks:

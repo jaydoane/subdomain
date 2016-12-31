@@ -26,6 +26,8 @@
                creates=/usr/local/bin/rebar3 chdir=/usr/local/bin
     - file: path=/usr/local/bin/rebar3 mode='a+x'
       
+    - file: path=/opt/subdomain/Mnesia state=directory mode=0755 owner={{deploy_user}}
+            
 - hosts: all
   gather_facts: false
   become: true

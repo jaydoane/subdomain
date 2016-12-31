@@ -1,6 +1,6 @@
 {application, 'subdomain',
- [{description, "An OTP application"},
   {vsn, "0.1.0"},
+ [{description, "Forward email aliases for subdomains"},
   {registered, []},
   {mod, {'subdomain_app', []}},
   {applications,
